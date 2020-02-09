@@ -13,3 +13,11 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+*.prof
+*.test
+*.swp
+.DS_Store
+/src/github.com
+/bin/
+/pkg/
