@@ -1,0 +1,7 @@
+*.prof
+*.test
+*.swp
+.DS_Store
+/src/github.com
+/bin/
+/pkg/
