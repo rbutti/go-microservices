@@ -6,7 +6,7 @@ import (
 	"library-service/server/handler/response"
 )
 
-func New(a *response.App) *chi.Mux {
+func New(a *response.RespHandle) *chi.Mux {
 	l := a.Logger()
 
 	r := chi.NewRouter()
