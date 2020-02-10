@@ -12,7 +12,7 @@ RUN apk update && apk add --no-cache gcc musl-dev git
 COPY . .
 
 #Run the go build command
-RUN go build -ldflags '-w -s' -a -o ./bin/app ./main/app
+RUN go build -ldflags '-w -s' -a -o ./bin ./main
 
 
 # DEPLOYMENT
@@ -22,7 +22,7 @@ FROM alpine
 RUN apk update && apk add --no-cache bash
 
 #Copy from build enviroment to deployment image
-COPY --from=build-env /library-service/bin/app /library-service/
+COPY --from=build-env /library-service/bin /library-service/app
 
 # CONFIGURATION
 EXPOSE 9090

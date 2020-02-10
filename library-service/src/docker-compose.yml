@@ -3,6 +3,6 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker/app/Dockerfile
+      dockerfile: ./docker/Dockerfile
     ports:
       - "9090:9090"
