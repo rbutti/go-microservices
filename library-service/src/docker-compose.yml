@@ -3,8 +3,21 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./build/docker/Dockerfile
+      dockerfile: ./setup/docker/Dockerfile
     env_file:
-      - ./build/properties/.env
+      - ./setup/properties/.env
     ports:
       - "9090:9090"
+    depends_on:
+      - db
+
+  db:
+    build: ./setup/db/
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: library_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - 3306:3306
+    restart: always
