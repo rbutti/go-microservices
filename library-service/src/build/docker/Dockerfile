@@ -8,6 +8,10 @@ WORKDIR /library-service
 #Run apk update
 RUN apk update && apk add --no-cache gcc musl-dev git
 
+#Run go mod download to download dependency
+COPY go.mod go.sum ./
+RUN go mod download
+
 #Copy from current location to image working director
 COPY . .
 

@@ -3,6 +3,8 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./build/docker/Dockerfile
+    env_file:
+      - ./build/properties/.env
     ports:
       - "9090:9090"

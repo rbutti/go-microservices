@@ -2,30 +2,30 @@ package main
 
 import (
 	"fmt"
+	"library-service/config"
+	"library-service/server/router"
 	"log"
 	"net/http"
-	"time"
 )
 
 func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", Greet)
+	appConf := config.AppConfig()
 
-	log.Println("Starting server :9090")
+	appRouter := router.New()
+
+	address := fmt.Sprintf(":%d", appConf.Server.Port)
+
+	log.Printf("Starting server %s\n", address)
 
 	s := &http.Server{
-		Addr:         ":9090",
-		Handler:      mux,
-		ReadTimeout:  30 * time.Second,
-		WriteTimeout: 30 * time.Second,
-		IdleTimeout:  120 * time.Second,
+		Addr:         address,
+		Handler:      appRouter,
+		ReadTimeout:  appConf.Server.TimeoutRead,
+		WriteTimeout: appConf.Server.TimeoutWrite,
+		IdleTimeout:  appConf.Server.TimeoutIdle,
 	}
 
 	if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatal("Server startup failed")
 	}
-}
-
-func Greet(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World!")
 }
