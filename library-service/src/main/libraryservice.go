@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"library-service/config"
-	"library-service/server/handler"
+	"library-service/server/handler/response"
 	"library-service/server/router"
 	lr "library-service/util/logger"
 	"net/http"
@@ -14,7 +14,7 @@ func main() {
 
 	logger := lr.New(appConf.Debug)
 
-	application := handler.New(logger)
+	application := response.New(logger)
 
 	appRouter := router.New(application)
 

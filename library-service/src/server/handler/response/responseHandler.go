@@ -1,6 +1,8 @@
-package handler
+package response
 
-import "net/http"
+import (
+	"net/http"
+)
 
 func (app *App) HandleIndex(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Length", "12")
