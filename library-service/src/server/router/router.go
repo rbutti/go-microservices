@@ -5,10 +5,11 @@ import (
 	"library-service/server/handler"
 )
 
-func New() *chi.Mux {
-	r := chi.NewRouter()
+func New(a *handler.App) *chi.Mux {
+	l := a.Logger()
 
-	r.MethodFunc("GET", "/", handler.HandleIndex)
+	r := chi.NewRouter()
+	r.Method("GET", "/", handler.NewHandler(a.HandleIndex, l))
 
 	return r
 }

@@ -3,19 +3,24 @@ package main
 import (
 	"fmt"
 	"library-service/config"
+	"library-service/server/handler"
 	"library-service/server/router"
-	"log"
+	lr "library-service/util/logger"
 	"net/http"
 )
 
 func main() {
 	appConf := config.AppConfig()
 
-	appRouter := router.New()
+	logger := lr.New(appConf.Debug)
+
+	application := handler.New(logger)
+
+	appRouter := router.New(application)
 
 	address := fmt.Sprintf(":%d", appConf.Server.Port)
 
-	log.Printf("Starting server %s\n", address)
+	logger.Info().Msgf("Starting server %v", address)
 
 	s := &http.Server{
 		Addr:         address,
@@ -26,6 +31,6 @@ func main() {
 	}
 
 	if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatal("Server startup failed")
+		logger.Fatal().Err(err).Msg("Server startup failed")
 	}
 }
