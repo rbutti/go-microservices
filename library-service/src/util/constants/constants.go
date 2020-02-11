@@ -1,10 +1,10 @@
 package constants
 
 const (
-	AppErrDataCreationFailure    = "data creation failure"
-	AppErrDataAccessFailure      = "data access failure"
-	AppErrDataUpdateFailure      = "data update failure"
-	AppErrJsonCreationFailure    = "json creation failure"
-	AppErrFormDecodingFailure    = "form decoding failure"
-	AppErrFormErrResponseFailure = "form error response failure"
+	AppErrDataCreationFailure    = "failed to create data"
+	AppErrDataAccessFailure      = "failed to access data"
+	AppErrDataUpdateFailure      = "failed to update data"
+	AppErrJsonCreationFailure    = "failed to create json"
+	AppErrFormDecodingFailure    = "failed to decode form"
+	AppErrFormErrResponseFailure = "error reponse from form"
 )

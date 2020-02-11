@@ -9,7 +9,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm"
 
-	"library-service/model"
+	"library-service/model/form"
 	"library-service/repository"
 	"library-service/util/constants"
 )
@@ -40,7 +40,7 @@ func (app *RespHandle) HandleListBooks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *RespHandle) HandleCreateBook(w http.ResponseWriter, r *http.Request) {
-	form := &model.BookForm{}
+	form := &form.BookForm{}
 	if err := json.NewDecoder(r.Body).Decode(form); err != nil {
 		app.logger.Warn().Err(err).Msg("")
 
@@ -113,7 +113,7 @@ func (app *RespHandle) HandleUpdateBook(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	form := &model.BookForm{}
+	form := &form.BookForm{}
 	if err := json.NewDecoder(r.Body).Decode(form); err != nil {
 		app.logger.Warn().Err(err).Msg("")
 

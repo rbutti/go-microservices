@@ -2,7 +2,6 @@ package interceptor
 
 import (
 	"fmt"
-	"library-service/server/router/interceptor"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -16,7 +15,7 @@ var (
 func TestContentTypeJson(t *testing.T) {
 	r, _ := http.NewRequest("GET", "/", nil)
 	rr := httptest.NewRecorder()
-	middleware.ContentTypeJson(http.HandlerFunc(sampleHandlerFunc())).ServeHTTP(rr, r)
+	ContentTypeJson(http.HandlerFunc(sampleHandlerFunc())).ServeHTTP(rr, r)
 	response := rr.Result()
 	if respBody := rr.Body.String(); respBody != expRespBody {
 		t.Errorf("Wrong response body:  got %v want %v ", respBody, expRespBody)

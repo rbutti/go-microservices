@@ -2,11 +2,11 @@ package repository
 
 import (
 	"github.com/jinzhu/gorm"
-	"library-service/model"
+	"library-service/model/domain"
 )
 
-func ListBooks(db *gorm.DB) (model.Books, error) {
-	books := make([]*model.Book, 0)
+func ListBooks(db *gorm.DB) (domain.Books, error) {
+	books := make([]*domain.Book, 0)
 	if err := db.Find(&books).Error; err != nil {
 		return nil, err
 	}
@@ -18,7 +18,7 @@ func ListBooks(db *gorm.DB) (model.Books, error) {
 	return books, nil
 }
 
-func CreateBook(db *gorm.DB, book *model.Book) (*model.Book, error) {
+func CreateBook(db *gorm.DB, book *domain.Book) (*domain.Book, error) {
 	if err := db.Create(book).Error; err != nil {
 		return nil, err
 	}
@@ -26,8 +26,8 @@ func CreateBook(db *gorm.DB, book *model.Book) (*model.Book, error) {
 	return book, nil
 }
 
-func ReadBook(db *gorm.DB, id uint) (*model.Book, error) {
-	book := &model.Book{}
+func ReadBook(db *gorm.DB, id uint) (*domain.Book, error) {
+	book := &domain.Book{}
 	if err := db.Where("id = ?", id).First(&book).Error; err != nil {
 		return nil, err
 	}
@@ -35,8 +35,8 @@ func ReadBook(db *gorm.DB, id uint) (*model.Book, error) {
 	return book, nil
 }
 
-func UpdateBook(db *gorm.DB, book *model.Book) error {
-	if err := db.First(&model.Book{}, book.ID).Update(book).Error; err != nil {
+func UpdateBook(db *gorm.DB, book *domain.Book) error {
+	if err := db.First(&domain.Book{}, book.ID).Update(book).Error; err != nil {
 		return err
 	}
 
@@ -44,7 +44,7 @@ func UpdateBook(db *gorm.DB, book *model.Book) error {
 }
 
 func DeleteBook(db *gorm.DB, id uint) error {
-	book := &model.Book{}
+	book := &domain.Book{}
 	if err := db.Where("id = ?", id).Delete(&book).Error; err != nil {
 		return err
 	}

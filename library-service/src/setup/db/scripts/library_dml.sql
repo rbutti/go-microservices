@@ -17,4 +17,7 @@ CREATE TABLE IF NOT EXISTS books
     PRIMARY KEY (id)
 );
 
+INSERT INTO books (title, author, published_date, image_url, description, created_at)
+VALUES ('I Too Had a Love Story', 'Ravinder Singh', '2008-01-01', 'https://images-na.ssl-images-amazon.com/images/I/81phwRtlzCL.jpg', 'I Too Had a Love Story is an English autobiographical novel written by Ravinder Singh', NOW());
+
 COMMIT;
