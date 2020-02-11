@@ -8,12 +8,15 @@ import (
 	"library-service/server/router"
 	lr "library-service/util/logger"
 	"net/http"
+	"time"
 )
 
 func main() {
 	appConf := config.AppConfig()
 
 	logger := lr.New(appConf.Debug)
+
+	time.Sleep(15 * time.Second)
 
 	db, err := dbConn.New(appConf)
 	if err != nil {

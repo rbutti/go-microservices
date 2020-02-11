@@ -1,4 +1,7 @@
--- +goose Up
+-- create the databases
+CREATE DATABASE IF NOT EXISTS library_db;
+USE library_db;
+
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE IF NOT EXISTS books
 (
@@ -13,6 +16,5 @@ CREATE TABLE IF NOT EXISTS books
     deleted_at     TIMESTAMP    NULL,
     PRIMARY KEY (id)
 );
--- +goose Down
--- SQL in this section is executed when the migration is rolled back.
-DROP TABLE IF EXISTS books;
+
+COMMIT;
