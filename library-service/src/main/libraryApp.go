@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"library-service/config"
-	dbInitialize "library-service/database/initialize"
 	dbConn "library-service/database/orm"
 	handler "library-service/server/handler/response"
 	"library-service/server/router"
@@ -12,8 +11,6 @@ import (
 )
 
 func main() {
-	dbInitialize.Initialize()
-
 	appConf := config.AppConfig()
 
 	logger := lr.New(appConf.Debug)
@@ -27,9 +24,9 @@ func main() {
 		db.LogMode(true)
 	}
 
-	responseHandler := handler.New(logger, db)
+	application := handler.New(logger, db)
 
-	appRouter := router.New(responseHandler)
+	appRouter := router.New(application)
 
 	address := fmt.Sprintf(":%d", appConf.Server.Port)
 
