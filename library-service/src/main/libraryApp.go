@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"library-service/config"
-	dbConn "library-service/database/orm"
 	handler "library-service/server/handler/response"
 	"library-service/server/router"
 	lr "library-service/util/logger"
@@ -12,13 +11,13 @@ import (
 )
 
 func main() {
-	appConf := config.AppConfig()
+	appConf := config.GetAppConfig()
 
 	logger := lr.New(appConf.Debug)
 
 	time.Sleep(15 * time.Second)
 
-	db, err := dbConn.New(appConf)
+	db, err := config.GetORMConfig(appConf)
 	if err != nil {
 		logger.Fatal().Err(err).Msg("")
 		return

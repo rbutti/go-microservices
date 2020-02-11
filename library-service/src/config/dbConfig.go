@@ -1,15 +1,12 @@
-package database
+package config
 
 import (
 	"database/sql"
 	"fmt"
-
 	"github.com/go-sql-driver/mysql"
-
-	"library-service/config"
 )
 
-func New(conf *config.Config) (*sql.DB, error) {
+func GetDBConfig(conf *AppConfig) (*sql.DB, error) {
 	cfg := &mysql.Config{
 		Net:                  "tcp",
 		Addr:                 fmt.Sprintf("%v:%v", conf.Db.Host, conf.Db.Port),

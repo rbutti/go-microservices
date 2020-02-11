@@ -1,13 +1,12 @@
-package orm
+package config
 
 import (
 	"fmt"
 	"github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"library-service/config"
 )
 
-func New(conf *config.Config) (*gorm.DB, error) {
+func GetORMConfig(conf *AppConfig) (*gorm.DB, error) {
 	cfg := &mysql.Config{
 		Net:                  "tcp",
 		Addr:                 fmt.Sprintf("%v:%v", conf.Db.Host, conf.Db.Port),
