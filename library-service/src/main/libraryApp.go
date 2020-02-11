@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	"library-service/config"
+	dbConn "library-service/database/orm"
 	handler "library-service/server/handler/response"
 	"library-service/server/router"
 	lr "library-service/util/logger"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -14,9 +16,20 @@ func main() {
 
 	logger := lr.New(appConf.Debug)
 
-	responseHandler := handler.New(logger)
+	time.Sleep(15 * time.Second)
 
-	appRouter := router.New(responseHandler)
+	db, err := dbConn.New(appConf)
+	if err != nil {
+		logger.Fatal().Err(err).Msg("")
+		return
+	}
+	if appConf.Debug {
+		db.LogMode(true)
+	}
+
+	application := handler.New(logger, db)
+
+	appRouter := router.New(application)
 
 	address := fmt.Sprintf(":%d", appConf.Server.Port)
 

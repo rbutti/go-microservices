@@ -27,6 +27,7 @@ RUN apk update && apk add --no-cache bash
 
 #Copy from build enviroment to deployment image
 COPY --from=build-env /library-service/bin /library-service/app
+COPY --from=build-env /library-service/setup/db/scripts /library-service/setup/db/scripts
 
 # CONFIGURATION
 EXPOSE 9090
