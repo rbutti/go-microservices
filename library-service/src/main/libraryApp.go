@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"library-service/config"
 	dbInitialize "library-service/database/initialize"
+	dbConn "library-service/database/orm"
 	handler "library-service/server/handler/response"
 	"library-service/server/router"
 	lr "library-service/util/logger"
@@ -11,13 +12,22 @@ import (
 )
 
 func main() {
+	dbInitialize.Initialize()
+
 	appConf := config.AppConfig()
 
 	logger := lr.New(appConf.Debug)
 
-	dbInitialize.Initialize()
+	db, err := dbConn.New(appConf)
+	if err != nil {
+		logger.Fatal().Err(err).Msg("")
+		return
+	}
+	if appConf.Debug {
+		db.LogMode(true)
+	}
 
-	responseHandler := handler.New(logger)
+	responseHandler := handler.New(logger, db)
 
 	appRouter := router.New(responseHandler)
 
