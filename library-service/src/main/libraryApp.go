@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"library-service/config"
+	dbInitialize "library-service/database/initialize"
 	handler "library-service/server/handler/response"
 	"library-service/server/router"
 	lr "library-service/util/logger"
@@ -13,6 +14,8 @@ func main() {
 	appConf := config.AppConfig()
 
 	logger := lr.New(appConf.Debug)
+
+	dbInitialize.Initialize()
 
 	responseHandler := handler.New(logger)
 
