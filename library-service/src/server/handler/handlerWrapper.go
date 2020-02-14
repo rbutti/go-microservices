@@ -3,12 +3,10 @@ package handler
 import (
 	"io"
 	"io/ioutil"
+	"library-service/util/logger"
 	"net"
 	"net/http"
 	"time"
-
-	"library-service/server/handler/log"
-	"library-service/util/logger"
 )
 
 type HandlerWrapper struct {
@@ -26,25 +24,25 @@ func NewHandler(h http.HandlerFunc, l *logger.Logger) *HandlerWrapper {
 func (h *HandlerWrapper) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 
-	le := &log.LogEntry{
+	le := &logger.LogEntry{
 		ReceivedTime:      start,
 		RequestMethod:     r.Method,
 		RequestURL:        r.URL.String(),
-		RequestHeaderSize: log.HeaderSize(r.Header),
+		RequestHeaderSize: logger.HeaderSize(r.Header),
 		UserAgent:         r.UserAgent(),
 		Referer:           r.Referer(),
 		Proto:             r.Proto,
-		RemoteIP:          log.IpFromHostPort(r.RemoteAddr),
+		RemoteIP:          logger.IpFromHostPort(r.RemoteAddr),
 	}
 
 	if addr, ok := r.Context().Value(http.LocalAddrContextKey).(net.Addr); ok {
-		le.ServerIP = log.IpFromHostPort(addr.String())
+		le.ServerIP = logger.IpFromHostPort(addr.String())
 	}
 	r2 := new(http.Request)
 	*r2 = *r
-	rcc := &log.ReadCounterCloser{R: r.Body}
+	rcc := &logger.ReadCounterCloser{R: r.Body}
 	r2.Body = rcc
-	W2 := &log.ResponseStats{W: w}
+	W2 := &logger.ResponseStats{W: w}
 
 	h.handler.ServeHTTP(W2, r2)
 

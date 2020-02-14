@@ -10,7 +10,7 @@ func New(a *handler.Handler) *chi.Mux {
 	l := a.Logger()
 
 	r := chi.NewRouter()
-	r.Method("GET", "/", handler.NewHandler(a.HandleIndex, l))
+	r.Method("GET", "/", handler.NewHandler(a.HandleRoot, l))
 
 	r.Get("/health/liveness", handler.HandleLive)
 	r.Method("GET", "/health/readiness", handler.NewHandler(a.HandleReady, l))
