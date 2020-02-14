@@ -102,22 +102,14 @@ $ docker run -d -p 9090:9090 ravikiran763/library-service /bin/bash
 | DPSchedulerStrategy.java | A strategy implementation of the SchedulerStrategy interface. This implementation uses Dynamic Programming https://en.wikipedia.org/wiki/Dynamic_programming to determine the schedule and is variation of the famous knapsack program. This Strategy is designed to able to fit maximum activities to a given time period/duration
  |
 
-### Javadoc
-
-The Javadoc for the application can be found at the below location
-[Activity Scheduler Application](https://github.com/rbutti/ActivityScheduler/blob/master/deliverables/activity-scheduler-javadoc.zip)
-
-### Code Coverage
-
-Below is the latest code coverage report generated on 14th Jan 2019
-![Code Coverage](https://github.com/rbutti/ActivityScheduler/blob/master/deliverables/CodeCoverageReport.PNG "Code Coverage Report")
-
 ### Future Enhancements
 
-* Implement factory pattern to create service, facade and strategy object for better scalability
-* Containerize the application using docker
-* Refactor to create a client module consisting of domain and interfaces 
-* Stress test the application against new event requirements
+* Implement swagger generator for the router and handlers
+* Implement service-discovery, load-balance and gateway
+* Deploy in kubernates and implement liveness and readiness probe to monitor health
+* Deploy in cloud
+* Create another microservice and demonstrate communication between services
+* implement OAuth security
 
 
 ### Contact Information
