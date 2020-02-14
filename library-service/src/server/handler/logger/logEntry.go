@@ -27,6 +27,21 @@ type logEntry struct {
 	Latency            time.Duration
 }
 
+type readCounterCloser struct {
+	r   io.ReadCloser
+	n   int64
+	err error
+}
+
+type writeCounter int64
+
+type responseStats struct {
+	w     http.ResponseWriter
+	hsize int64
+	wc    writeCounter
+	code  int
+}
+
 func ipFromHostPort(hp string) string {
 	h, _, err := net.SplitHostPort(hp)
 	if err != nil {
@@ -36,12 +51,6 @@ func ipFromHostPort(hp string) string {
 		return h[1 : len(h)-1]
 	}
 	return h
-}
-
-type readCounterCloser struct {
-	r   io.ReadCloser
-	n   int64
-	err error
 }
 
 func (rcc *readCounterCloser) Read(p []byte) (n int, err error) {
@@ -58,8 +67,6 @@ func (rcc *readCounterCloser) Close() error {
 	return rcc.r.Close()
 }
 
-type writeCounter int64
-
 func (wc *writeCounter) Write(p []byte) (n int, err error) {
 	*wc += writeCounter(len(p))
 	return len(p), nil
@@ -69,13 +76,6 @@ func headerSize(h http.Header) int64 {
 	var wc writeCounter
 	h.Write(&wc)
 	return int64(wc) + 2 // for CRLF
-}
-
-type responseStats struct {
-	w     http.ResponseWriter
-	hsize int64
-	wc    writeCounter
-	code  int
 }
 
 func (r *responseStats) Header() http.Header {
