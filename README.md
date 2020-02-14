@@ -43,6 +43,25 @@ The deliverables for the application can be found at the below location
 
 
 ### Execution
+##### Run in local
+* clone the project
+* Open terminal and navigate to the following src folder
+
+[PROJECT_LOCATION]/go-microservices-goldcopy/library-service/src
+
+* Run following command to build the project
+```sh
+$ docker-compose build
+```
+
+* Run following command to run the project
+```sh
+$ docker-compose run
+```
+* go to your browser and check for http://localhost:9090  you should see "Hello World!!" printed on the browser
+
+
+##### Run Docker image
 An docker image of the code is currently pushed into public docker hub repository. Follow the below steps once docker is installed in your local machine
 * Open terminal and pull the docker image
 ```sh
@@ -81,7 +100,7 @@ Expected output
 
 ##### Project Structure
 
-![Project Structure](https://github.com/rbutti/go-microservices-goldcopy/tree/master/library-service/deliverables/ProjectStructure.PNG "Project Structure")
+![Project Structure](https://github.com/rbutti/go-microservices-goldcopy/blob/master/library-service/deliverables/ProjectStructure.png "Project Structure")
 
 ##### Package Structure
 
@@ -107,17 +126,22 @@ Expected output
 
 ##### Class Design
 
-![Class Diagram](https://github.com/rbutti/ActivityScheduler/blob/master/deliverables/ClassDiagram.PNG "Class Diagram")
-
 | Class | Summary |
 | ------ | ------ |
-| ActivitySchedulerApplication.java | Entrypoint to the Application consisting main() method|
-| ActivitySchedulerServiceImpl.java | An implementation of ActivitySchedulerService interface. This class implements logic to read activities from a file, generate a schedule and print the schedule on an console and to a file |
-| BeanIOCatalogParserFacadeImpl.java | An implementation of CatalogParserFacade interface that contains necessary logic to read an input activities file, unmarshals it into an Activity object and returns a catalog of all the activities found in the file. |
-| ConsoleScheduleWriterFacadeImpl.java |An implementation of the interface ScheduleWriterFacade. This implementation writes the Activity Schedule to an console |
-| FileScheduleWriterFacadeImpl.java| An implementation of the interface ScheduleWriterFacade. This implementation writes the Activity Schedule to an file. The file will be generated in the same location as the application jar |
-| DPSchedulerStrategy.java | A strategy implementation of the SchedulerStrategy interface. This implementation uses Dynamic Programming https://en.wikipedia.org/wiki/Dynamic_programming to determine the schedule and is variation of the famous knapsack program. This Strategy is designed to able to fit maximum activities to a given time period/duration
- |
+| libraryApp.go | Entrypoint to the Application consisting main() method|
+| appConfig.go | Contains configuration related to applction like server details etc |
+| ormConfig.go | Contains configuration related to database and  gorm |
+| bookRepo.go | Repository class to perform CRUD operation on Book table |
+| handler.go |Application request handler |
+| handlerWrapper.go | Wrapper for request handler and logging |
+| rootHander.go | handles request to '/' |
+| libraryHander.go | handles request to '/api/vi/library-service' |
+| libraryHander.go | handles request to '/health' |
+| router.go | routes the request to necessary handler |
+| responseInterceptor.go | intercepts router reponse |
+| constants.go | contains application constants |
+| logger.go | wrapper to zerolog framework |
+| logEntry.go | log entry formatter |
 
 ### Future Enhancements
 
