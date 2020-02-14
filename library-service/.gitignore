@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 
 
 .settings/
+=======
+/bin/
+/pkg/
+/.settings/
+>>>>>>> branch 'master' of https://github.com/rbutti/go-microservices-goldcopy.git
