@@ -5,34 +5,36 @@ import (
 	"library-service/config"
 	"library-service/server/handler"
 	"library-service/server/router"
-	lr "library-service/util/logger"
+	"library-service/util/logger"
 	"net/http"
 	"time"
 )
 
 func main() {
+
+	//Wait for DB to get loaded
+	time.Sleep(30 * time.Second)
+
 	appConf := config.GetAppConfig()
+	appLogger := logger.New(appConf.Debug)
 
-	logger := lr.New(appConf.Debug)
-
-	time.Sleep(15 * time.Second)
-
+	//get DB connection
 	db, err := config.GetORMConfig(appConf)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("")
+		appLogger.Fatal().Err(err).Msg("")
 		return
 	}
 	if appConf.Debug {
 		db.LogMode(true)
 	}
 
-	application := handler.New(logger, db)
+	//initiate router and handler
+	appHandler := handler.New(appLogger, db)
+	appRouter := router.New(appHandler)
 
-	appRouter := router.New(application)
-
+	//initiate the server
 	address := fmt.Sprintf(":%d", appConf.Server.Port)
-
-	logger.Info().Msgf("Starting server %v", address)
+	appLogger.Info().Msgf("Server starting... %v", address)
 
 	s := &http.Server{
 		Addr:         address,
@@ -43,6 +45,8 @@ func main() {
 	}
 
 	if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		logger.Fatal().Err(err).Msg("Server startup failed")
+		appLogger.Fatal().Err(err).Msg("Server startup failed")
 	}
+	//notify success
+	appLogger.Info().Msgf("Application started Successfully!! %v", address)
 }
