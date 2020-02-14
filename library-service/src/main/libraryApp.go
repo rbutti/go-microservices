@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"library-service/config"
-	handler "library-service/server/handler/response"
+	"library-service/server/handler"
 	"library-service/server/router"
 	lr "library-service/util/logger"
 	"net/http"

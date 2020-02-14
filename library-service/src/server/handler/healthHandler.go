@@ -1,4 +1,4 @@
-package response
+package handler
 
 import (
 	"net/http"
@@ -8,7 +8,7 @@ func HandleLive(w http.ResponseWriter, _ *http.Request) {
 	writeHealthy(w)
 }
 
-func (app *RespHandle) HandleReady(w http.ResponseWriter, r *http.Request) {
+func (app *Handler) HandleReady(w http.ResponseWriter, r *http.Request) {
 	if err := app.db.DB().Ping(); err != nil {
 		app.Logger().Fatal().Err(err).Msg("")
 		writeUnhealthy(w)

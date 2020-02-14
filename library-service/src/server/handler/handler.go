@@ -1,11 +1,11 @@
-package response
+package handler
 
 import (
 	"github.com/jinzhu/gorm"
 	"library-service/util/logger"
 )
 
-type RespHandle struct {
+type Handler struct {
 	logger *logger.Logger
 	db     *gorm.DB
 }
@@ -13,13 +13,13 @@ type RespHandle struct {
 func New(
 	logger *logger.Logger,
 	db *gorm.DB,
-) *RespHandle {
-	return &RespHandle{
+) *Handler {
+	return &Handler{
 		logger: logger,
 		db:     db,
 	}
 }
 
-func (app *RespHandle) Logger() *logger.Logger {
+func (app *Handler) Logger() *logger.Logger {
 	return app.logger
 }

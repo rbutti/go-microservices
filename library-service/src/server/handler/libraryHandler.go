@@ -1,4 +1,4 @@
-package response
+package handler
 
 import (
 	"encoding/json"
@@ -14,7 +14,7 @@ import (
 	"library-service/util/constants"
 )
 
-func (app *RespHandle) HandleListBooks(w http.ResponseWriter, r *http.Request) {
+func (app *Handler) HandleListBooks(w http.ResponseWriter, r *http.Request) {
 	books, err := repository.ListBooks(app.db)
 	if err != nil {
 		app.logger.Warn().Err(err).Msg("")
@@ -39,7 +39,7 @@ func (app *RespHandle) HandleListBooks(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (app *RespHandle) HandleCreateBook(w http.ResponseWriter, r *http.Request) {
+func (app *Handler) HandleCreateBook(w http.ResponseWriter, r *http.Request) {
 	form := &form.BookForm{}
 	if err := json.NewDecoder(r.Body).Decode(form); err != nil {
 		app.logger.Warn().Err(err).Msg("")
@@ -71,7 +71,7 @@ func (app *RespHandle) HandleCreateBook(w http.ResponseWriter, r *http.Request) 
 	w.WriteHeader(http.StatusCreated)
 }
 
-func (app *RespHandle) HandleReadBook(w http.ResponseWriter, r *http.Request) {
+func (app *Handler) HandleReadBook(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseUint(chi.URLParam(r, "id"), 0, 64)
 	if err != nil || id == 0 {
 		app.logger.Info().Msgf("can not parse ID: %v", id)
@@ -104,7 +104,7 @@ func (app *RespHandle) HandleReadBook(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (app *RespHandle) HandleUpdateBook(w http.ResponseWriter, r *http.Request) {
+func (app *Handler) HandleUpdateBook(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseUint(chi.URLParam(r, "id"), 0, 64)
 	if err != nil || id == 0 {
 		app.logger.Info().Msgf("can not parse ID: %v", id)
@@ -149,7 +149,7 @@ func (app *RespHandle) HandleUpdateBook(w http.ResponseWriter, r *http.Request) 
 	w.WriteHeader(http.StatusAccepted)
 }
 
-func (app *RespHandle) HandleDeleteBook(w http.ResponseWriter, r *http.Request) {
+func (app *Handler) HandleDeleteBook(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseUint(chi.URLParam(r, "id"), 0, 64)
 	if err != nil || id == 0 {
 		app.logger.Info().Msgf("can not parse ID: %v", id)

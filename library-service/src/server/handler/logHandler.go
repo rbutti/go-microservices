@@ -1,4 +1,4 @@
-package logger
+package handler
 
 import (
 	"io"
@@ -7,58 +7,59 @@ import (
 	"net/http"
 	"time"
 
+	"library-service/server/handler/log"
 	"library-service/util/logger"
 )
 
-type Handler struct {
+type HandlerWrapper struct {
 	handler http.Handler
 	logger  *logger.Logger
 }
 
-func NewHandler(h http.HandlerFunc, l *logger.Logger) *Handler {
-	return &Handler{
+func NewHandler(h http.HandlerFunc, l *logger.Logger) *HandlerWrapper {
+	return &HandlerWrapper{
 		handler: h,
 		logger:  l,
 	}
 }
 
-func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *HandlerWrapper) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 
-	le := &logEntry{
+	le := &log.LogEntry{
 		ReceivedTime:      start,
 		RequestMethod:     r.Method,
 		RequestURL:        r.URL.String(),
-		RequestHeaderSize: headerSize(r.Header),
+		RequestHeaderSize: log.HeaderSize(r.Header),
 		UserAgent:         r.UserAgent(),
 		Referer:           r.Referer(),
 		Proto:             r.Proto,
-		RemoteIP:          ipFromHostPort(r.RemoteAddr),
+		RemoteIP:          log.IpFromHostPort(r.RemoteAddr),
 	}
 
 	if addr, ok := r.Context().Value(http.LocalAddrContextKey).(net.Addr); ok {
-		le.ServerIP = ipFromHostPort(addr.String())
+		le.ServerIP = log.IpFromHostPort(addr.String())
 	}
 	r2 := new(http.Request)
 	*r2 = *r
-	rcc := &readCounterCloser{r: r.Body}
+	rcc := &log.ReadCounterCloser{R: r.Body}
 	r2.Body = rcc
-	w2 := &responseStats{w: w}
+	W2 := &log.ResponseStats{W: w}
 
-	h.handler.ServeHTTP(w2, r2)
+	h.handler.ServeHTTP(W2, r2)
 
 	le.Latency = time.Since(start)
-	if rcc.err == nil && rcc.r != nil {
+	if rcc.ERR == nil && rcc.R != nil {
 		// If the handler hasn't encountered an error in the Body (like EOF),
 		// then consume the rest of the Body to provide an accurate rcc.n.
 		io.Copy(ioutil.Discard, rcc)
 	}
-	le.RequestBodySize = rcc.n
-	le.Status = w2.code
+	le.RequestBodySize = rcc.N
+	le.Status = W2.CODE
 	if le.Status == 0 {
 		le.Status = http.StatusOK
 	}
-	le.ResponseHeaderSize, le.ResponseBodySize = w2.size()
+	le.ResponseHeaderSize, le.ResponseBodySize = W2.Size()
 	h.logger.Info().
 		Time("received_time", le.ReceivedTime).
 		Str("method", le.RequestMethod).
