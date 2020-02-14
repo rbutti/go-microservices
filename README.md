@@ -57,7 +57,22 @@ $ docker run -d -p 9090:9090 ravikiran763/library-service /bin/bash
 * go to your browser and check for http://localhost:9090  you should see "Hello World!!" printed on the browser
 
 ##### Example
+Go to browser and hit the following URL : http://localhost:9090/api/v1/library/books
+Expected output
 
+`
+[
+   {
+      "id":1,
+      "title":"I Too Had a Love Story",
+      "author":"Ravinder Singh",
+      "published_date":"2008-01-01",
+      "image_url":"https://images-na.ssl-images-amazon.com/images/I/81phwRtlzCL.jpg",
+      "description":"I Too Had a Love Story is an English autobiographical novel written by Ravinder Singh"
+   }
+]
+
+`
 
 
 ### Technical Design
