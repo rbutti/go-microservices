@@ -60,7 +60,7 @@ $ docker run -d -p 9090:9090 ravikiran763/library-service /bin/bash
 Go to browser and hit the following URL : http://localhost:9090/api/v1/library/books
 Expected output
 
-`
+```json
 [
    {
       "id":1,
@@ -72,7 +72,7 @@ Expected output
    }
 ]
 
-`
+```
 
 
 ### Technical Design
