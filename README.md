@@ -8,25 +8,22 @@ This application has the following features:
 * Provide docker and docker-compose tempates to quickly build docker images, run containers and push the containers to docker registry
 * Custom logging to print all request and response from handlers
 * Demonstrates the use of interceptors to inject headers into the response
-* Provides a health monitoring API to check the service and DB health
+* Provides a health monitoring API to check the service and DB health status
 
 ### Tools and Technologies
 
 This reference project uses the following tools and technologies:
 
-| Technology | Version |
-| ------ | ------ |
-| Golang | 1.13 |
-| BeanIO | 2.1.0 |
-| commons-io | 2.5 |
-| Log4j | 2.7 |
-| Junit | 4.12 |
-| Apache Common Lang 3 | 3.7 |
-| Maven | 4.0.0 |
-| Git | 2.20.1 |
-| Github | N/A |
-| Eclipse | Oxygen |
-
+| Technology | Version | Description |
+| ------ | ------ |------ |
+| Golang | 1.13 | Programming language|
+| go-chi | 2.1.0 | Router Framework |
+| mysql | 8.0 | Database |
+| gorm | 1.9.12 | ORM framework |
+| zerolog | 1.17.2 | Logging framework |
+| Docker | 18.09.2 | Container Creator |
+| git | 2.20.1 | Soure Code Management |
+| Goclipse | 0.16.1| Integrated Developement Environment |
 
 ### Deliverables
 
@@ -47,7 +44,8 @@ The deliverables for the application can be found at the below location
 
 ### Assumptions
 
-* All the activities in the file needs to be scheduled
+* Docker is installed in your system following the [guide](https://docs.docker.com/install/)
+* Golang is installed in your system following the [guide](https://golang.org/doc/install#install) and the $GOROOT and $GOPATH are set correctly
 * Staff Motivation Presentation is currently configured to be of 15mins
 * A team will be created even if it doesn't consist of activities that can stretch whole day.
  This is to accomodate the assumption that all activities needs to be scheduled and the input file may not contain sufficient number of activities that can be schedule for a team on a day
