@@ -81,7 +81,7 @@ Expected output
 
 ##### Project Structure
 
-![Project Structure](https://github.com/rbutti/go-microservices-goldcopy/tree/master/library-service/deliverables/ProjectStructure.PNG "Project Structure")
+![Project Structure](https://github.com/rbutti/go-microservices-goldcopy/blob/master/library-service/deliverables/ProjectStructure.png "Project Structure")
 
 ##### Package Structure
 
