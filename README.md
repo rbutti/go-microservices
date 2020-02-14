@@ -43,6 +43,25 @@ The deliverables for the application can be found at the below location
 
 
 ### Execution
+##### Run in local
+* clone the project
+* Open terminal and navigate to the following src folder
+
+[PROJECT_LOCATION]/go-microservices-goldcopy/library-service/src
+
+* Run following command to build the project
+```sh
+$ docker-compose build
+```
+
+* Run following command to run the project
+```sh
+$ docker-compose run
+```
+* go to your browser and check for http://localhost:9090  you should see "Hello World!!" printed on the browser
+
+
+##### Run Docker image
 An docker image of the code is currently pushed into public docker hub repository. Follow the below steps once docker is installed in your local machine
 * Open terminal and pull the docker image
 ```sh
